@@ -1,0 +1,21 @@
+<host-apdu-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:apduServiceBanner="@mipmap/ic_launcher"
+    android:description="@string/app_name"
+    android:requireDeviceUnlock="true">
+    <aid-group
+        android:category="payment"
+        android:description="@string/app_name">
+        <aid-filter
+            android:name="325041592E5359532E4444463031"
+            android:description="@string/PPSE" /> <!-- mandatory -->
+        <aid-filter
+            android:name="A0000000031010"
+            android:description="@string/visa" /> <!-- optional -->
+        <aid-filter
+            android:name="A0000000041010"
+            android:description="@string/mastercard" /> <!-- optional -->
+        <aid-filter
+            android:name="A000000732100123"
+            android:description="@string/meeza_card"/>
+    </aid-group>
+</host-apdu-service>

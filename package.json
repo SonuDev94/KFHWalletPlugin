@@ -1,0 +1,17 @@
+{
+  "name": "KFHWalletPlugin",
+  "version": "1.0.0",
+  "description": "KFH EBC Wallet App Provisioning",
+  "cordova": {
+    "id": "com.aub.mobilebanking.phone.eg",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,13 @@
+android {
+    
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dependencies {
+    implementation(name: "wa-api-ebc-googleServices-2.1.51-stg-ebc-onprem", ext: "aar")
+    }
+}
