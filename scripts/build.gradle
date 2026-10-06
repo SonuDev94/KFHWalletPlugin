@@ -1,0 +1,22 @@
+android {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dependencies {
+        // implementation(name: "wa-api-kmp-ebc-googleServices-1.1.26-stg-ebc-onprem-all", ext: "aar")
+        implementation(name: "wa-api-kmp-ebc-googleServices-1.1.33-stg-ebc-onprem-all", ext: "aar")
+    }
+
+    buildTypes {
+        release {
+            proguardFiles file("${projectDir}/kfhwallet-proguard-rules.pro")
+        }
+        debug {
+            proguardFiles file("${projectDir}/kfhwallet-proguard-rules.pro")
+        }
+    }
+
+}

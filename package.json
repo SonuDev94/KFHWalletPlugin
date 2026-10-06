@@ -1,0 +1,17 @@
+{
+  "name": "KFHWalletPlugin",
+  "version": "1.0.0",
+  "description": "KFH Wallet for tokenization card manually using EBC SDK",
+  "cordova": {
+    "id": "com.aub.mobilebanking.phone.eg",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Sonu Kumar",
+  "license": "ISC"
+}

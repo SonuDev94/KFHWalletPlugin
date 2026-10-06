@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.aub.mobilebanking.phone.eg" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>KFHWalletPlugin</name>
+
+     <!-- Engines: required versions -->
+     <engines>
+        <engine name="cordova" version=">=12.0.0" />
+        <engine name="cordova-android" version=">=12.0.0" />
+    </engines>
+
+
+    <js-module name="KFHWalletPlugin" src="www/KFHWalletPlugin.js">
+        <clobbers target="cordova.plugins.KFHWalletPlugin" />
+    </js-module>
+
+    <hook type="after_prepare" src="hooks/after_prepare/001-fix-finalizer-permissions.js" />
+    <hook type="after_prepare" src="hooks/after_prepare/020-add-finalizer-buildscript.js" />
+    <hook type="after_prepare" src="hooks/after_prepare/030-set-application-class.js" />
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="KFHWalletPlugin">
+                <preference name="GradlePluginKotlinEnabled" value="true" />
+                <preference name="GradlePluginGoogleServicesEnabled" value="true" />
+                <param name="android-package" value="com.aub.mobilebanking.phone.eg.KFHWalletPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file
+            src="google-services.json"
+            target-dir="app" />
+
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.NFC" />
+            <uses-feature android:name="android.hardware.nfc" android:required="true" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+
+       <!-- <edit-config
+            file="AndroidManifest.xml"
+            mode="merge"
+            target="/manifest/application">
+            <application android:name="com.aub.mobilebanking.phone.eg.WaAppSystemContext" />
+        </edit-config> -->
+
+        <!-- <config-file
+    target="AndroidManifest.xml"
+    mode="merge"
+    parent="/manifest">
+
+    <application
+        android:name="com.aub.mobilebanking.phone.eg.WaAppSystemContext" />
+
+</config-file> -->
+
+        <!-- APDU Service -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service
+                android:name="com.idemia.wa.api.nfc.WaApduService"
+                android:exported="true"
+                android:permission="android.permission.BIND_NFC_SERVICE">
+                <intent-filter>
+                    <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+                <meta-data
+                    android:name="android.nfc.cardemulation.host_apdu_service"
+                    android:resource="@xml/aid_list" />
+            </service>
+
+
+            <!-- <service android:name="com.aub.mobilebanking.phone.eg.fcm.WaFirebaseMessagingService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                </intent-filter>
+            </service> -->
+
+            <!-- Receiver for updates -->
+            <receiver
+                android:name="com.idemia.wa.api.WaPackageReplacedReceiver"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                </intent-filter>
+            </receiver>
+
+        </config-file>
+
+        <!-- Copy aid_list.xml into app's res/xml -->
+        <resource-file src="src/android/res/xml/aid_list.xml" target="res/xml/aid_list.xml" />
+        <resource-file src="src/android/res/values/my_plugin_strings.xml"
+            target="res/values/my_plugin_strings.xml" />
+
+        <!-- ProGuard/R8 rules to keep BouncyCastle's provider registration
+             (prevents "BKS not found" / KeyStoreException on minified builds) -->
+        <resource-file src="proguard/kfhwallet-proguard-rules.pro"
+            target="app/kfhwallet-proguard-rules.pro" />
+
+        
+        <source-file src="src/android/WaAppSystemContext.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg" />
+
+        <source-file src="src/android/KFHWalletPlugin.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg" />
+        <!-- data -->
+        <source-file src="src/android/data/CardArtStorage.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/data" />
+        <!-- repository -->
+        <source-file src="src/android/repository/DefaultWaServicesRepository.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/repository" />
+        <source-file src="src/android/repository/WaServicesRepository.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/repository" />
+        <source-file src="src/android/repository/WaServicesProvider.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/repository" />
+        <source-file src="src/android/repository/CardArtRepository.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/repository" />
+        <source-file src="src/android/repository/DefaultCardArtRepository.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/repository" />
+
+        <!-- model -->
+        <source-file src="src/android/model/EnrollmentData.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/ExpirationDateEnrollmentData.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/CdCvmOption.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/HomeViewCardToken.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/InitialData.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/CardConfigurationModel.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <source-file src="src/android/model/TokenConfigurationListModel.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/model" />
+        <!-- util -->
+        <source-file src="src/android/utils/RxJavaThreadingExtensions.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/utils" />
+        <source-file src="src/android/utils/NetworkCheck.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/utils" />
+        <source-file src="src/android/utils/AppLogger.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/utils" />
+        <source-file src="src/android/utils/Currencies.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/utils" />
+        <source-file src="src/android/utils/Hex.java"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/utils" />
+
+        <!-- error handing -->
+        <source-file src="src/android/error/Error.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/error" />
+        <source-file src="src/android/error/ErrorResolver.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/error" />
+        <source-file src="src/android/error/ResourcesBasedErrorResolver.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/error" />
+
+
+        <!-- usecase -->
+        <source-file src="src/android/enrollment/EnrollmentManager.kt"
+            target-dir="app/src/main/java/com/aub/mobilebanking/phone/eg/enrollment" />
+        <!-- <source-file
+            src="libs/wa-api-kmp-ebc-googleServices-1.1.26-stg-ebc-onprem-all.aar"
+            target-dir="libs" /> -->
+
+        <source-file
+            src="libs/wa-api-kmp-ebc-googleServices-1.1.33-stg-ebc-onprem-all.aar"
+            target-dir="libs" />
+
+        <source-file
+            src="libs/aap.fin"
+            target-dir="libs" />
+
+        <!-- <source-file
+            src="libs/ai.digital.protect-android.jar"
+            target-dir="libs" /> -->
+        <source-file
+            src="libs/ai.digital.harden-android.jar"
+            target-dir="libs" />
+
+        <source-file
+            src="libs/finalizer"
+            target-dir="libs" />
+
+        <!-- Maven dependencies -->
+        <framework src="com.google.android.gms:play-services-base:18.7.2" />
+        <framework src="androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2" />
+        <framework src="org.slf4j:slf4j-api:2.0.16" />
+        <framework src="io.reactivex.rxjava3:rxandroid:3.0.2" />
+        <framework src="com.github.tony19:logback-android:3.0.0" />
+        <framework src="com.squareup.okhttp3:logging-interceptor:4.9.1" />
+        <framework src="org.bouncycastle:bcprov-jdk18on:1.77" />
+        <framework src="com.squareup.retrofit2:retrofit:2.11.0" />
+        <framework src="com.squareup.retrofit2:converter-jackson:2.11.0" />
+        <framework src="com.squareup.retrofit2:converter-scalars:2.11.0" />
+        <framework src="com.google.firebase:firebase-core:21.1.1" />
+        <framework src="com.google.firebase:firebase-messaging:24.0.1" />
+        <framework src="androidx.work:work-runtime-ktx:2.10.1" />
+        <framework src="com.google.android.play:integrity:1.4.0" />
+        <framework src="com.fasterxml.uuid:java-uuid-generator:5.1.0" />
+        <framework src="com.fasterxml.jackson.core:jackson-databind:2.17.2" />
+        <framework src="com.squareup.okhttp3:okhttp:4.9.1" />
+        <framework src="androidx.annotation:annotation:1.8.2" />
+        <framework src="com.neovisionaries:nv-i18n:1.24" />
+        <framework src="org.jetbrains.kotlin:kotlin-reflect:2.0.20" />
+        <framework src="org.jetbrains.kotlin:kotlin-stdlib:2.0.20" />
+        <framework src="com.google.code.gson:gson:2.10.1" />
+        <framework src="androidx.biometric:biometric:1.1.0" />
+        <framework src="com.google.gms:google-services:4.4.2" type="gradlePlugin" />
+        <framework src="com.squareup.moshi:moshi-kotlin:1.15.2" />
+        <framework src="com.ionspin.kotlin:bignum:0.3.10" />
+        <framework src="com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2" />
+
+
+        <!-- Gradle hook-->
+        <resource-file
+            src="scripts/build.gradle"
+            target="app/build.gradle"
+            merge="true" />
+        <framework src="scripts/build.gradle" custom="true" type="gradleReference" />
+
+        <!-- <resource-file
+            src="scripts/pro-build.gradle"
+            target="pro-build.gradle"
+            merge="true" /> 
+         <framework src="scripts/pro-build.gradle" custom="true" type="gradleReference" /> -->
+
+
+        <!-- <framework src="scripts/properties.gradle" custom="true" type="gradleReference" /> -->
+
+        <!-- <framework src="scripts/root-build-extras.gradle" custom="true" type="gradleReference"
+        /> -->
+
+
+    </platform>
+</plugin>

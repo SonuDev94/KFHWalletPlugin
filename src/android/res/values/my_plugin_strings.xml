@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title_device_paired">Device already paired</string>
+    <string name="error_text_device_paired">Your device is already paired.</string>
+    <string name="error_button_device_paired">OK</string>
+
+    <string name="error_title_cannot_pair">Cannot pair</string>
+    <string name="error_text_cannot_pair">Your device cannot be paired.</string>
+    <string name="error_button_cannot_pair">Your device cannot be paired.</string>
+
+    <string name="error_title_cards_max_count_reached">Card max count</string>
+    <string name="error_text_cards_max_count_reached">Cards maximum count has been reached.
+        You cannot enroll any more cards.</string>
+    <string name="error_button_cards_max_count_reached">OK</string>
+
+    <string name="error_title_unknown">Oops</string>
+    <string name="error_text_unknown">Something went wrong.</string>
+    <string name="error_button_unknown">OK</string>
+
+    <string name="error_title_connectivity">Connectivity problem</string>
+    <string name="error_text_connectivity">Looks like there was some connectivity problem.
+        Please try again.</string>
+    <string name="error_button_positive_connectivity">Retry</string>
+    <string name="error_button_negative_connectivity">Cancel</string>
+
+    <string name="PPSE">PPSE</string>
+    <string name="visa">VISA</string>
+    <string name="mastercard">Mastercard</string>
+    <string name="meeza_card">MEEZA Card</string>
+    <string name="transaction_system_unlock_title">Unlock your screen</string>
+    <string name="transaction_system_unlock_info">This is required to proceed with transaction</string>
+    <string name="fcm_account_number">ns@fcm.googleapis.com</string>
+</resources>

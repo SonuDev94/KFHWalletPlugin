@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "499994478722",
+    "project_id": "kfhtokenziation",
+    "storage_bucket": "kfhtokenziation.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499994478722:android:52bf233c3c22afa0f9cc9b",
+        "android_client_info": {
+          "package_name": "com.aub.mobilebanking.phone.eg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-TO-hfdKWreOf3-yqXNXNXANdqCuVoS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

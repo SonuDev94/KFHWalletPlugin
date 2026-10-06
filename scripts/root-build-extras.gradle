@@ -1,0 +1,65 @@
+
+// buildscript {
+//     repositories {
+//         flatDir {
+//             dirs 'app/libs'
+//         }
+//     }
+//     dependencies {
+//         classpath 'ai.digital.protect-android:ai.digital.protect-android:1.0.0'
+// //         classpath files(name: "ai.digital.protect-android", ext: "jar")
+//     }
+// }
+
+
+/*
+android {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dependencies {
+        // implementation(name: "wa-api-ebc-googleServices-2.1.51-stg-ebc-onprem", ext: "aar")
+        implementation(name: "wa-api-kmp-ebc-googleServices-1.1.11-stg-ebc-onprem", ext: "aar")
+    }
+
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jcenter.bintray.com" }
+        // Note: flatDirs are usually defined per module, not globally in the root buildscript
+        flatDir { dirs 'libs' }
+    }
+    dependencies {
+        classpath "ai.digital.protect-android:ai.digital.protect-android:1.0.0"
+    }
+}
+
+// Add repositories that app modules might need (if using the app/libs flatDir approach)
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jcenter.bintray.com" }
+//        flatDir { dirs 'app/libs' }
+    }
+}
+apply plugin: 'ai.digital.finalize-android'
+
+finalizeAndroid {
+    buildVariants {
+        android.applicationVariants.configureEach { variant ->
+            create("${variant.name}") {
+                disabled = false
+                finalizeAndroid = finalizerPath
+                finalizationFiles(finFilePath)
+            }
+        }
+    }
+}
+
+*/

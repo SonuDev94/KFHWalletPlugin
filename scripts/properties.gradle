@@ -1,0 +1,26 @@
+// Define paths as project properties
+ext {
+    finalizerPath = "$projectDir/libs/finalizer"
+    finPath = "$projectDir/libs/aap.fin"
+    protectJar = "$projectDir/libs/ai.digital.protect-android.jar"
+}
+
+// Add repo for JAR
+repositories {
+    flatDir { dirs 'libs' }
+}
+
+// Later in the same file or another, use these properties
+apply plugin: "ai.digital.finalize-android"
+
+finalizeAndroid {
+    buildVariants {
+        android.applicationVariants.configureEach { variant ->
+            create("${variant.name}") {
+                disabled = false
+                finalizeAndroid = project.finalizerPath
+                finalizationFiles = [project.finPath]
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+       gradlePluginPortal()
+        jcenter()
+        google()
+        mavenCentral()
+        // maven { url "https://jcenter.bintray.com" }
+        // Note: flatDirs are usually defined per module, not globally in the root buildscript
+        flatDir { dirs 'app/libs' }
+        // flatDir { 
+        //             dirs "/Users/sonukumar/Documents/KFH/Source-KMPSDK1.11.1-251113/wallet-agent-white-label-app-release-1.1.11-kmp-ebc/FINALIZATION FILES"
+
+        //     }
+    }
+    dependencies {
+        // classpath "ai.digital.protect-android:ai.digital.protect-android:1.0.0"
+        classpath "ai.digital.harden-android:ai.digital.harden-android:1.0.0"
+    }
+}
+
+// Add repositories that app modules might need (if using the app/libs flatDir approach)
+allprojects {
+    repositories {
+       gradlePluginPortal()
+        jcenter()
+        google()
+        mavenCentral()
+        // maven { url "https://jcenter.bintray.com" }
+       flatDir { dirs 'app/libs' }
+    }
+}
+apply plugin: 'ai.digital.finalize-android'
+
+def finalizerPath = "$projectDir/libs/finalizer"
+def finFilePath = "app/libs/aap.fin"
+
+finalizeAndroid {
+    buildVariants {
+        android.applicationVariants.configureEach { variant ->
+            create("${variant.name}") {
+                disabled = false
+                finalizeAndroid = finalizerPath
+                finalizationFiles(finFilePath)
+            }
+        }
+    }
+}
